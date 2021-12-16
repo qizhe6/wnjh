@@ -24,7 +24,8 @@ workflows:
       - schedule:
           cron: "23 20 * * *"
           filters:
-            tags:
-              only: /.*/
+            branches:
+              only: 
+                - main
     jobs:
       - build
