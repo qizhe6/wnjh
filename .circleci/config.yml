@@ -23,5 +23,8 @@ workflows:
     triggers:
       - schedule:
           cron: "23 20 * * *"
+          filters:
+            tags:
+              only: /.*/
     jobs:
       - build
