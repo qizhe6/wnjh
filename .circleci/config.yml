@@ -1,0 +1,31 @@
+jobs:
+  build:
+    docker:
+      - image: cimg/python:3.10.1
+    resource_class: small
+    steps:
+      - checkout
+      - run: 
+          name: Upgrade pip
+          command: /home/circleci/.pyenv/versions/3.10.1/bin/python3.10 -m pip install --upgrade pip
+      - run: 
+          name: Insall Dependices
+          command: pip3 install requests
+      - run: 
+          name: Begin
+          command: python3 run.py -u $USERNAME -p $PASSWORD
+workflows:
+  version: 2
+  commit:
+    jobs:
+      - build
+  nightly:
+    triggers:
+      - schedule:
+          cron: "23 20 * * *"
+          filters:
+            branches:
+              only: 
+                - main
+    jobs:
+      - build
